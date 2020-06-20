@@ -1,18 +1,23 @@
 {
-  "name": "meat-api",
-  "version": "1.0.0",
-  "description": "API de restaurantes",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Marco Antonio P",
-  "license": "ISC",
-  "dependencies": {
-    "restify": "6.3.4"
-  },
-  "devDependencies": {
-    "@types/restify": "5.0.6",
-    "nodemon": "^2.0.4"
-  }
+	"name": "meat-api",
+	"version": "1.0.0",
+	"description": "API de restaurantes",
+	"main": "index.js",
+	"scripts": {
+		"compile": "tsc && node dist/main.js",
+		"dev": "nodemon -e ts --exec \"npm run compile\""
+	},
+	"author": "Marco Antonio P",
+	"license": "ISC",
+	"dependencies": {
+		"@types/restify": "^8.4.2",
+		"mongoose": "^5.9.19",
+		"restify": "^8.5.1",
+		"typescript": "^3.9.5"
+	},
+	"devDependencies": {
+		"@types/mongoose": "^5.7.27",
+		"@types/node": "^14.0.13",
+		"nodemon": "^2.0.4"
+	}
 }

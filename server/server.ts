@@ -1,10 +1,19 @@
 import * as restify from 'restify';
+import * as mongoose from 'mongoose';
 import { enviroment } from '../common/enviroment';
 import { Router } from '../common/router';
+import { mergePatchBodyParser } from './merge-patch.parser';
 
 export class Server {
 
-	application: restify.Server
+	application: restify.Server;
+
+	initializeDb() {
+		return mongoose.connect(enviroment.db.url, {
+			useUnifiedTopology: true,
+			useNewUrlParser: true,
+		});
+	}
 
 	initRoutes(routers: Router[] = []): Promise<any> {
 		return new Promise((resolve, reject) => {
@@ -20,9 +29,10 @@ export class Server {
 				}
 
 				this.application.use(restify.plugins.queryParser());
+				this.application.use(restify.plugins.bodyParser());
+				this.application.use(mergePatchBodyParser);
 
 				//routes
-
 				this.application.listen(enviroment.server.port, () => {
 					resolve(this.application);
 				});
@@ -34,7 +44,8 @@ export class Server {
 	}
 
 	bootstrap(routers: Router[] = []): Promise<Server> {
-		return this.initRoutes(routers).then(() => this)
+		return this.initializeDb().then(() =>
+			this.initRoutes(routers).then(() => this))
 	}
 
 }
