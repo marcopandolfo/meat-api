@@ -10,7 +10,9 @@
 	"author": "Marco Antonio P",
 	"license": "ISC",
 	"dependencies": {
+		"@types/bcrypt": "^3.0.0",
 		"@types/restify": "^8.4.2",
+		"bcrypt": "^5.0.0",
 		"mongoose": "^5.9.19",
 		"restify": "^8.5.1",
 		"restify-errors": "^8.0.2",
