@@ -3,12 +3,22 @@ import * as mongoose from 'mongoose';
 import { NotFoundError } from 'restify-errors';
 
 export abstract class ModelRouter<D extends mongoose.Document> extends Router {
+
+	basePath: string;
+
 	constructor(protected model: mongoose.Model<D>) {
-		super()
+		super();
+		this.basePath = `/${this.model.collection.name}`;
 	}
 
 	protected prepareOne(query: mongoose.DocumentQuery<D, D>): mongoose.DocumentQuery<D, D> {
 		return query;
+	}
+
+	envelope(document: any): any {
+		let resource = Object.assign({ _links: {} }, document.toJSON());
+		resource._links.self = `${this.basePath}/${resource._id}`;
+		return resource;
 	}
 
 	validateId = (req, resp, next) => {
