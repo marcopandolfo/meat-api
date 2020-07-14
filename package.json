@@ -6,9 +6,12 @@
 	"scripts": {
 		"compile": "tsc && node dist/main.js",
 		"dev": "nodemon -e ts --exec \"npm run compile\"",
-		"test": "jest"
+		"test": "ts-node jest.startup.ts"
 	},
 	"jest": {
+		"globals": {
+			"address": "http://localhost:3001"
+		},
 		"testEnvironment": "node",
 		"transform": {
 			"^.+\\.tsx?$": "ts-jest"
@@ -40,9 +43,11 @@
 		"@types/restify-errors": "^4.3.3",
 		"@types/supertest": "^2.0.10",
 		"jest": "^26.1.0",
+		"jest-cli": "^26.1.0",
 		"nodemon": "^2.0.4",
 		"supertest": "^4.0.2",
 		"ts-jest": "^26.1.1",
+		"ts-node": "^8.10.2",
 		"typescript": "^3.9.6"
 	}
 }
