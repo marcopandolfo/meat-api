@@ -10,11 +10,12 @@ let server: Server;
 
 const beforeAllTests = () => {
 	enviroment.db.url = process.env.DB_URL || 'mongodb://localhost/meat-api-test-db';
-	enviroment.server.port = process.env.SERVER_PORT || 3001;
+	enviroment.server.port = 3001;
 	server = new Server();
+
 	return server.bootstrap([
 		usersRouter,
-		reviewsRouter
+		reviewsRouter,
 	])
 		.then(() => User.remove({}).exec())
 		.then(() => Review.remove({}).exec());
@@ -28,5 +29,13 @@ const afterAllTests = () => {
 
 beforeAllTests()
 	.then(() => jestCli.run())
+	.then(() => {
+		let admin = new User();
+		admin.name = 'admin';
+		admin.email = 'admin@email.com';
+		admin.password = '123456';
+		admin.profiles = ['admin', 'user'];
+		return admin.save();
+	})
 	.then(() => afterAllTests())
 	.catch(console.error);

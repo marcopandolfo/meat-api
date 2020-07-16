@@ -3,7 +3,7 @@ import { ForbiddenError } from 'restify-errors';
 
 export const authorize: (...profiles: string[]) => restify.RequestHandler = (...profiles) => {
 	return (req, resp, next) => {
-		if (req.authenticated !== undefined && req.authenticated.hasAny(...profiles)) {
+		if ((<any>req).authenticated !== undefined && (<any>req).authenticated.hasAny(...profiles)) {
 			next();
 		} else {
 			next(new ForbiddenError('Permission denied'));

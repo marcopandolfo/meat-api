@@ -7,6 +7,7 @@ import { mergePatchBodyParser } from './merge-patch.parser';
 import { handleError } from './error.handler';
 import { tokenParser } from '../security/token.parser';
 import { fstat } from 'fs';
+import { env } from 'process';
 
 export class Server {
 
@@ -23,12 +24,17 @@ export class Server {
 		return new Promise((resolve, reject) => {
 			try {
 
-				this.application = restify.createServer({
+				const options: restify.ServerOptions = {
 					name: 'meat-api',
 					version: '1.0.0',
-					certificate: fs.readFileSync('./security/keys/cert.pem'),
-					key: fs.readFileSync('./security/keys/key.pem')
-				});
+				};
+
+				if (enviroment.security.enableHTTPS) {
+					options.certificate = fs.readFileSync(enviroment.security.certificate);
+					options.key = fs.readFileSync(enviroment.security.key);
+				}
+
+				this.application = restify.createServer(options);
 
 				for (const router of routers) {
 					router.applyRoutes(this.application);

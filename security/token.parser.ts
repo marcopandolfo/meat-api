@@ -31,7 +31,7 @@ function applyBearer(req: restify.Request, next): (error, decoded) => void {
 		if (decoded) {
 			User.findByEmail(decoded.sub).then(user => {
 				if (user) {
-					req.authenticated = user;
+					(<any>req).authenticated = user;
 					next();
 				}
 			}).catch(next);
