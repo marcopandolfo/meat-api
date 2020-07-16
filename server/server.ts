@@ -1,10 +1,12 @@
 import * as restify from 'restify';
 import * as mongoose from 'mongoose';
+import * as fs from 'fs';
 import { enviroment } from '../common/enviroment';
 import { Router } from '../common/router';
 import { mergePatchBodyParser } from './merge-patch.parser';
 import { handleError } from './error.handler';
 import { tokenParser } from '../security/token.parser';
+import { fstat } from 'fs';
 
 export class Server {
 
@@ -23,7 +25,9 @@ export class Server {
 
 				this.application = restify.createServer({
 					name: 'meat-api',
-					version: '1.0.0'
+					version: '1.0.0',
+					certificate: fs.readFileSync('./security/keys/cert.pem'),
+					key: fs.readFileSync('./security/keys/key.pem')
 				});
 
 				for (const router of routers) {
