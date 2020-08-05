@@ -32,10 +32,12 @@
 	"dependencies": {
 		"@types/bcrypt": "^3.0.0",
 		"@types/restify": "^8.4.2",
+		"@types/restify-cors-middleware": "^1.0.1",
 		"bcrypt": "^5.0.0",
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^5.9.19",
 		"restify": "^8.5.1",
+		"restify-cors-middleware": "^1.1.1",
 		"restify-errors": "^8.0.2"
 	},
 	"devDependencies": {
